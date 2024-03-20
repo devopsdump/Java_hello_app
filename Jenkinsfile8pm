@@ -1,6 +1,6 @@
 node {
     // Environment or variables can be set here
-    def appWar = 'boxfuse-sample-java-war-hello.war'
+    def appWar = 'Java_hello_app.war'
 
     try {
         // Stage: GIT checkout
