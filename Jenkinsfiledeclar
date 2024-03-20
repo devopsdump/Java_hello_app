@@ -1,0 +1,36 @@
+pipeline {
+      agent any
+      
+      stages{
+            stage("GIT checkout"){
+            steps{
+                 git 'https://github.com/RAJANI9/Java_hello_app.git'
+              }
+            }
+            stage("build"){
+                  steps{
+                       sh "mvn clean package"
+                       sh "mv target/*.war target/Java_hello_app.war"
+                      }
+                       
+            }
+             stage("depoly"){
+                  steps{
+                     
+                       
+                       sshagent(['TOMCAT']) { 
+                       
+                       sh """
+                            scp -o StrictHostKeyChecking=no  target/Java_hello_app.war ubuntu@43.205.136.127:/home/ubuntu/apache-tomcat-9.0.87/webapps
+                            
+                            ssh ubuntu@43.205.136.127 /home/ubuntu/apache-tomcat-9.0.87/bin/shutdown.sh
+                            ssh ubuntu@43.205.136.127 /home/ubuntu/apache-tomcat-9.0.87/bin/startup.sh
+                            
+                          """
+    
+}
+                      
+                       }
+            }
+       }
+  }     
