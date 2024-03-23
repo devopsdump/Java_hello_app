@@ -4,8 +4,8 @@ pipeline {
     stages {
         stage('Build and run') {
           parallel {
-            stage('master-agent-pipeline') {
-              agent {label 'master'}
+            stage('slave1-agent-pipeline') {
+              agent {label 'dev'}
               stages{
                 stage('Build') {
                 steps {
@@ -19,8 +19,8 @@ pipeline {
                 }
 	       }
               }
-            stage('ubuntu-agent-pipeline') {
-              agent {label 'ubuntu'}
+            stage('slave2-agent-pipeline') {
+              agent {label 'slave2'}
               stages{
                 stage('Build') {
                 steps {
