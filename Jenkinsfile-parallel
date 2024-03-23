@@ -32,6 +32,14 @@ parameters {
                 deployToTomcat('3.83.152.239', 'tomcat', 'tomcat', 'http://3.83.152.239:8080/manager/text', '/boxfuse-sample-java-war-hello', 'Dev')
             }
         }
+stage("Deploy to QA") {
+            when {
+                expression { params.BRANCH_NAME == 'fe/dev' }
+            }
+            steps {
+                deployToTomcat('54.174.240.155', 'tomcat', 'tomcat', 'http://54.174.240.155:8080/manager/text', '/boxfuse-sample-java-war-hello', 'Dev')
+            }
+        }
 	       }
               }
             stage('slave2-agent-pipeline') {
