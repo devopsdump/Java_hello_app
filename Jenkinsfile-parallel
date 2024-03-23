@@ -11,7 +11,7 @@ pipeline {
             steps {
                 script {
                     // Checkout the specified branch
-                    def branchName = params.BRANCH_NAME
+                    def branchName = 'master'
                     checkout([$class: 'GitSCM', branches: [[name: branchName]], userRemoteConfigs: [[url: 'https://github.com/devopsdump/Java_hello_app.git']]])
                 }
             }
