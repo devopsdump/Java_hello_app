@@ -1,6 +1,8 @@
 pipeline {
     agent none
-
+parameters {
+        string(name: 'BRANCH_NAME', defaultValue: 'fe/dev', description: 'Specify the branch name to deploy')
+    }
     stages {
         stage('Build and run') {
           parallel {
@@ -11,7 +13,7 @@ pipeline {
             steps {
                 script {
                     // Checkout the specified branch
-                    def branchName = 'master'
+                    def branchName = params.BRANCH_NAME
                     checkout([$class: 'GitSCM', branches: [[name: branchName]], userRemoteConfigs: [[url: 'https://github.com/devopsdump/Java_hello_app.git']]])
                 }
             }
@@ -21,14 +23,14 @@ pipeline {
                 sh "mvn clean package"
                 sh "mv target/hello-1.0.war target/boxfuse-sample-java-war-hello.war"
             }
-  stage("Deploy to Dev") {
+        }
+		stage("Deploy to Dev") {
             when {
                 expression { params.BRANCH_NAME == 'fe/dev' }
             }
             steps {
                 deployToTomcat('3.83.152.239', 'tomcat', 'tomcat', 'http://3.83.152.239:8080/manager/text', '/boxfuse-sample-java-war-hello', 'Dev')
             }
-        }
         }
 	       }
               }
@@ -47,7 +49,6 @@ pipeline {
              }
             }
            }
-
           }
 		  def deployToTomcat(tomcatIP, username, password, tomcatURL, contextPath, environment) {
     def warFileName = 'target/boxfuse-sample-java-war-hello.war'
