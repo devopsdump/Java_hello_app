@@ -47,7 +47,9 @@ pipeline {
              }
             }
            }
-def deployToTomcat(tomcatIP, username, password, tomcatURL, contextPath, environment) {
+
+          }
+		  def deployToTomcat(tomcatIP, username, password, tomcatURL, contextPath, environment) {
     def warFileName = 'target/boxfuse-sample-java-war-hello.war'
 
     // Deploy the WAR file using curl
@@ -56,4 +58,3 @@ def deployToTomcat(tomcatIP, username, password, tomcatURL, contextPath, environ
     """
     echo "Deployment to ${environment} server completed."
 }
-          }
