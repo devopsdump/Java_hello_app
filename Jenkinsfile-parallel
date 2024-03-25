@@ -18,10 +18,15 @@ parameters {
                 }
             }
          }
-               stage("Build") {
+               stage("Compile") {
             steps {
-                sh "mvn clean package"
-                sh "mv target/hello-1.0.war target/boxfuse-sample-java-war-hello.war"
+                sh "mvn clean compile"
+            }
+        }
+stage("Build") {
+            steps {
+                sh "mvn clean install"
+ 		sh "mv target/hello-1.0.war target/boxfuse-sample-java-war-hello.war"
             }
         }
 		stage("Deploy to Dev") {
