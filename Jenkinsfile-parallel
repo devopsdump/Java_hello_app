@@ -38,6 +38,14 @@ stage("Build") {
  		deployToTomcat('54.237.237.207', 'tomcat', 'tomcat', 'http://54.237.237.207:8080/manager/text', '/boxfuse-sample-java-war-hello', 'Dev')
             }
         }
+stage("Deploy to QA") {
+            when {
+                expression { params.BRANCH_NAME == 'fe/dev' }
+            }
+            steps {
+ 		deployToTomcat('54.237.237.207', 'tomcat', 'tomcat', 'http://54.237.237.207:8080/manager/text', '/boxfuse-sample-java-war-hello', 'QA')
+            }
+        }
 	       }
               }
             stage('QA-pipeline') {
