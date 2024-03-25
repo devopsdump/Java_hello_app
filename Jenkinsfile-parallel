@@ -34,7 +34,7 @@ stage("Build") {
                 expression { params.BRANCH_NAME == 'fe/dev' }
             }
             steps {
-                deployToTomcat('3.83.152.239', 'tomcat', 'tomcat', 'http://3.83.152.239:8080/manager/text', '/boxfuse-sample-java-war-hello', 'Dev')
+                deployToTomcat('3.81.133.103', 'tomcat', 'tomcat', 'http://3.81.133.103:8080/manager/text', '/boxfuse-sample-java-war-hello', 'Dev')
             }
         }
 	       }
