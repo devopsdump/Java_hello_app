@@ -35,7 +35,6 @@ stage("Build") {
             }
             steps {
                 deployToTomcat('3.81.133.103', 'tomcat', 'tomcat', 'http://3.81.133.103:8080/manager/text', '/boxfuse-sample-java-war-hello', 'Dev')
- 		deployToTomcat('54.237.237.207', 'tomcat', 'tomcat', 'http://54.237.237.207:8080/manager/text', '/boxfuse-sample-java-war-hello', 'Dev')
             }
         }
 stage("Deploy to QA") {
