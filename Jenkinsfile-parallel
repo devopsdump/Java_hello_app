@@ -6,8 +6,8 @@ parameters {
     stages {
         stage('Build and run') {
           parallel {
-            stage('slave1-agent-pipeline') {
-              agent {label 'dev'}
+            stage('Development-Pipeline') {
+              agent {label 'dev-slave-agent'}
               stages{
                 stage('GIT CHECKOUT'){
             steps {
@@ -34,8 +34,8 @@ parameters {
         }
 	       }
               }
-            stage('slave2-agent-pipeline') {
-              agent {label 'slave2'}
+            stage('QA-pipeline') {
+              agent {label 'qa-slave-agent'}
               stages{
                 stage("Testing") {
             steps {
