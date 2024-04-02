@@ -49,4 +49,16 @@
             </plugin>
         </plugins>
     </build>
+    
+    <!-- Distribution Management for deploying artifacts -->
+    <distributionManagement>
+        <snapshotRepository>
+            <id>nexusRepo</id>
+            <url>http://44.201.149.61:8081/repository/sample-snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>nexusRepo</id>
+            <url>http://44.201.149.61:8081/repository/sample-releases/</url>
+        </repository>
+    </distributionManagement>
 </project>
