@@ -1,9 +1,23 @@
-FROM maven:3.5-jdk-8 as BUILD
-COPY src /usr/src/myapp/src
-COPY pom.xml /usr/src/myapp
-RUN mvn -f /usr/src/myapp/pom.xml clean package
+FROM maven:3.8.4-openjdk-11-slim as maven_builder
 
-FROM tomcat:7.0
-COPY --from=BUILD /usr/src/myapp/target/Java_hello_app.war /usr/local/tomcat/webapps/Java_hello_app.war
-ENV TZ=America/Los_Angeles
+ENV HOME=/app
+
+WORKDIR $HOME
+
+ADD pom.xml $HOME
+
+RUN ["/usr/local/bin/mvn-entrypoint.sh", "mvn", "verify", "clean", "--fail-never"]
+
+ADD . $HOME
+
+RUN ["mvn","clean","install","-T","2C","-DskipTests=true"]
+
+FROM tomcat:9.0-jdk11-openjdk-slim
+
+COPY --from=maven_builder $HOME/wc_admin/target/Java_hello_app.war /usr/local/tomcat/webapps
+
+# Expose the port the application runs on (Tomcat default is 8080)
 EXPOSE 8080
+
+# Command to run the application
+CMD ["catalina.sh", "run"]
