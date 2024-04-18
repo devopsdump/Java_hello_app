@@ -1,10 +1,11 @@
+# Build Stage
 FROM maven AS BUILD
 WORKDIR /app
 COPY . /app
-COPY ./libraries /root/.m2
 RUN cd ./target; ls
 RUN mvn clean package -Dmaven.test.skip=true
 
+# Deployment Stage
 FROM tomcat:8.0-alpine
 RUN rm -rf /usr/local/tomcat/webapps/ROOT
 COPY --from=BUILD /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
